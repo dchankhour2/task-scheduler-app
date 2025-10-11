@@ -4,11 +4,11 @@ import { Task } from '../types';
 
 interface TaskListProps {
   tasks: Task[];
-  onUpdateTask: (task: Task) => void;
+  openDeleteTaskModal: (task: Task) => void;
   onDeleteTask: (taskId: string) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdateTask, onDeleteTask }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, openDeleteTaskModal, onDeleteTask }) => {
   return (
     <div className="bg-white rounded-xl shadow p-4">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">My Tasks</h2>
@@ -17,7 +17,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdateTask, onDeleteTask }
           <TaskItem 
             key={task.id} 
             task={task} 
-            onUpdateTask={onUpdateTask} 
+            openDeleteTaskModal={openDeleteTaskModal} 
             onDeleteTask={onDeleteTask} 
           />
         ))}

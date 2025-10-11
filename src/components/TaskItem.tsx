@@ -9,11 +9,11 @@ interface TaskItemProps {
         recurring: boolean;
     };
     onUpdate: (id: string) => void;
-    onDelete: (id: string) => void;
+    openDeleteTaskModal: (id: string) => void;
     onToggleComplete: (id: string) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, onToggleComplete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, openDeleteTaskModal, onToggleComplete }) => {
     return (
         <li key={task.id} className="py-4">
             <div className="flex justify-between items-start">
@@ -36,7 +36,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, onToggleC
                       title="Edit"
                     ><Edit className="w-5 h-5" /></button>
                     <button
-                      onClick={() => handleDelete(task.id)}
+                      onClick={() => openDeleteTaskModal(task)}
                       className="text-red-500 hover:text-red-700"
                       title="Delete"
                     ><Trash2 className="w-5 h-5" /></button>

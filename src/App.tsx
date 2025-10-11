@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import Layout from './components/Layout';
-import TaskEditor from './components/TaskEditor';
 
 export default function App() {
   return (
