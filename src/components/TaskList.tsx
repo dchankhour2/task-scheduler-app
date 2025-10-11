@@ -10,9 +10,9 @@ interface TaskListProps {
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, onUpdateTask, onDeleteTask }) => {
   return (
-    <div>
-      <h2>Your Tasks</h2>
-      <ul>
+    <div className="bg-white rounded-xl shadow p-4">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">My Tasks</h2>
+      <ul className="divide-y divide-gray-200">
         {tasks.map(task => (
           <TaskItem 
             key={task.id} 

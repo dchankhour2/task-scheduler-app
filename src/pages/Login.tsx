@@ -5,31 +5,25 @@ import { useAuth } from '../hooks/useAuth';
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { login, error, user } = useAuth();
+
+    if(user) 
+        navigate('/');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError('');
 
-        try {
-            await login(username, password);
-            navigate('/dashboard');
-        } catch (err) {
-            setError('Invalid username or password');
-        }
+        await login(username, password);
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex items-center justify-center min-h-screen">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-                <h2 className="text-3xl font-bold text-center text-gray-900">
-                    Welcome back
-                </h2>
                 <p className="text-center text-gray-600">
                     Sign in to access your account.
                 </p>
+                {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
                         <label className='block text-sm font-medium text-gray-700' htmlFor="username">Username</label>
@@ -53,10 +47,9 @@ const Login: React.FC = () => {
                             required
                         />
                     </div>
-                    {error && <p className="error">{error}</p>}
                     <div className="mt-1 relative">
                         <button 
-                            className='absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5' 
+                            className='w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-200' 
                             type="submit">Login
                         </button>
                     </div>

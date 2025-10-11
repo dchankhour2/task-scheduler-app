@@ -1,4 +1,5 @@
 import React from 'react';
+import { Edit, Trash2, Repeat, Calendar } from "lucide-react";
 
 interface TaskItemProps {
     task: {
@@ -14,14 +15,34 @@ interface TaskItemProps {
 
 const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, onDelete, onToggleComplete }) => {
     return (
-        <div className="task-item">
-            <h3 style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>{task.title}</h3>
-            <button onClick={() => onToggleComplete(task.id)}>
-                {task.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
-            </button>
-            <button onClick={() => onUpdate(task.id)}>Edit</button>
-            <button onClick={() => onDelete(task.id)}>Delete</button>
-        </div>
+        <li key={task.id} className="py-4">
+            <div className="flex justify-between items-start">
+                <div>
+                    <h3 className="font-semibold text-gray-800">{task.title}</h3>
+                    {task.description && (
+                      <p className="text-gray-600 text-sm">{task.description}</p>
+                    )}
+                    <div className="text-sm text-gray-500 mt-1">
+                        {task.dueDate && <><Calendar className='inline-block' /> Due: {task.dueDate}</>}{" "}
+                        {task.recurring && (
+                            <span className="ml-2 inline-block text-blue-600 font-medium"><Repeat /></span>
+                        )}
+                    </div>
+                </div>
+                <div className="flex space-x-2">
+                    <button
+                      onClick={() => openEditModal(task)}
+                      className="text-yellow-500 hover:text-yellow-600"
+                      title="Edit"
+                    ><Edit className="w-5 h-5" /></button>
+                    <button
+                      onClick={() => handleDelete(task.id)}
+                      className="text-red-500 hover:text-red-700"
+                      title="Delete"
+                    ><Trash2 className="w-5 h-5" /></button>
+                </div>
+            </div>
+        </li>
     );
 };
 

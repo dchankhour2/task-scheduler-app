@@ -9,21 +9,16 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState<User>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const current = authService.getCurrentUser();
-    if (current) setUser(current);
+    console.log('current', current);
+    if (current)
+      setUser(current);
+    
+    setIsLoading(false);
   }, []);
-
-  const signup = async (username: string, password: string) => {
-    try {
-      setError(null);
-      const newUser = await authService.signup(username, password);
-      setUser(newUser);
-    } catch (err: any) {
-      setError(err?.message ?? 'Signup failed');
-    }
-  };
 
   const login = async (username: string, password: string) => {
     try {
@@ -40,7 +35,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const value = { user, error, signup, login, logout };
+  const value = { user, error, login, logout, isLoading };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
