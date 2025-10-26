@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
 const Login: React.FC = () => {
@@ -9,7 +9,7 @@ const Login: React.FC = () => {
     const { login, error, user } = useAuth();
 
     if(user) 
-        navigate('/');
+        navigate('/dashboard');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,9 +20,7 @@ const Login: React.FC = () => {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-                <p className="text-center text-gray-600">
-                    Sign in to access your account.
-                </p>
+                <h2 className="text-2xl font-semibold text-indigo-200 mb-4">Sign in to your account</h2>
                 {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div>
@@ -50,11 +48,9 @@ const Login: React.FC = () => {
                     <div className="mt-1 relative">
                         <button 
                             className='w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition duration-200' 
-                            type="submit">Login
-                        </button>
+                            type="submit">Login</button>
                     </div>
                 </form>
-                <button><Link to="/signup">Signup</Link></button>
             </div>
         </div>
     );

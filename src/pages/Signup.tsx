@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 import { validateUsername, validatePassword } from '../utils/validators';
+import LandingHeader from '../components/LandingHeader';
 
 const Signup: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -20,7 +21,7 @@ const Signup: React.FC = () => {
 
         try {
             await authService.signup(username, password);
-            navigate('/');
+            navigate('/dashboard');
         } catch (err) {
             setError('Signup failed. Please try again.');
         }
@@ -29,6 +30,7 @@ const Signup: React.FC = () => {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+                <h2 className="text-2xl font-semibold text-indigo-200 mb-4">Create your account</h2>
                 {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
                 <form className="space-y-6" onSubmit={handleSignup}>
                     <div>
