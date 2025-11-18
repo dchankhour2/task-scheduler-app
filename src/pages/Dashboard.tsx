@@ -5,32 +5,32 @@ import AddTask from '../components/AddTask';
 import DeleteTask from '../components/DeleteTask';
 import Modal from '../components/Elements/Modal';
 import SearchTask from '../components/Elements/Search';
+import { Task } from '../types';
 
 const Dashboard: React.FC = () => {
     const [openAddTask, setOpenAddTask] = useState(false);
     const [openDeleteTask, setOpenDeleteTask] = useState(false);
-    const [currentTask, setCurrentTask] = useState(null);
-    const { tasks, updateTask, toggleTaskCompletion, deleteTask } = useTasks();
-
-    console.log('list of tasks', tasks);
+    const [currentTask, setCurrentTask] = useState<Task | null>(null);
+    const { tasks, deleteTask } = useTasks();
 
     //Search
     const [searchTerm, setSearchTerm] = useState("");
     const [filterDate, setFilterDate] = useState("");
 
     const filteredTasks = tasks.filter((task) => {
+        const tDesc = task.description ? task.description : '';
         const matchesSearch =
         task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        task.description.toLowerCase().includes(searchTerm.toLowerCase());
+        tDesc.toLowerCase().includes(searchTerm.toLowerCase());
 
         const matchesDate = filterDate
-        ? task.dueDate === filterDate
+        ? (task.dueDate ? (new Date(task.dueDate as any).toISOString().slice(0,10) === filterDate) : false)
         : true;
 
         return matchesSearch && matchesDate;
     });
 
-    const openDeleteTaskModal = (task) => {
+    const openDeleteTaskModal = (task: Task) => {
         setCurrentTask(task);
         setOpenDeleteTask(true);
     }
@@ -42,7 +42,7 @@ const Dashboard: React.FC = () => {
                 <button
                     onClick={() => setOpenAddTask(true)}
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                + Add Task
+                    + Add Task
                 </button>
             </header>
             <SearchTask 
@@ -57,19 +57,13 @@ const Dashboard: React.FC = () => {
                 onDeleteTask={deleteTask}
             />
             {openAddTask && (
-                <Modal 
-                    title="Add Task">
-                    <AddTask 
-                        setOpenAddTask={setOpenAddTask} />
-                </Modal>
+                <AddTask setOpenAddTask={setOpenAddTask} />
             )}
+
             {openDeleteTask && (
-                <Modal 
-                    title="Delete Task">
-                    <DeleteTask 
-                        setOpenDeleteTask={setOpenDeleteTask}
-                        taskToDelete={currentTask} />
-                </Modal>
+                <DeleteTask
+                    setOpenDeleteTask={setOpenDeleteTask}
+                    taskToDelete={currentTask} />
             )}
         </div>
     );

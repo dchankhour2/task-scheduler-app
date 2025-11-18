@@ -1,42 +1,43 @@
 import React from 'react';
 import { Edit, Trash2, Repeat, Calendar } from "lucide-react";
+import { Task } from '../types';
 
 interface TaskItemProps {
-    task: {
-        id: string;
-        title: string;
-        completed: boolean;
-        recurring: boolean;
-    };
-    onUpdate: (id: string) => void;
-    openDeleteTaskModal: (id: string) => void;
-    onToggleComplete: (id: string) => void;
+        task: Task;
+        openEditModal?: (task: Task) => void;
+        openDeleteTaskModal: (task: Task) => void;
+        onToggleComplete?: (id: string) => void;
+        onDeleteTask?: (id: string) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onUpdate, openDeleteTaskModal, onToggleComplete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, openEditModal, openDeleteTaskModal, onToggleComplete }) => {
     return (
         <li key={task.id} className="py-4">
             <div className="flex justify-between items-start">
                 <div>
                     <h3 className="font-semibold text-gray-800">{task.title}</h3>
-                    {task.description && (
-                      <p className="text-gray-600 text-sm">{task.description}</p>
-                    )}
-                    <div className="text-sm text-gray-500 mt-1">
-                        {task.dueDate && <><Calendar className='inline-block' /> Due: {task.dueDate}</>}{" "}
-                        {task.recurring && (
-                            <span className="ml-2 inline-block text-blue-600 font-medium"><Repeat /></span>
-                        )}
-                    </div>
+                                        {task.description && (
+                                            <p className="text-gray-600 text-sm">{task.description}</p>
+                                        )}
+                                        <div className="text-sm text-gray-500 mt-1">
+                                                {task.dueDate && (
+                                                    <>
+                                                        <Calendar className='inline-block' /> Due: {typeof task.dueDate === 'string' ? new Date(task.dueDate).toLocaleDateString() : task.dueDate?.toLocaleDateString()}
+                                                    </>
+                                                )}{" "}
+                                                {task.recurring && (
+                                                        <span className="ml-2 inline-block text-blue-600 font-medium"><Repeat /></span>
+                                                )}
+                                        </div>
                 </div>
                 <div className="flex space-x-2">
                     <button
-                      onClick={() => openEditModal(task)}
+                                            onClick={() => openEditModal?.(task)}
                       className="text-yellow-500 hover:text-yellow-600"
                       title="Edit"
                     ><Edit className="w-5 h-5" /></button>
                     <button
-                      onClick={() => openDeleteTaskModal(task)}
+                                            onClick={() => openDeleteTaskModal(task)}
                       className="text-red-500 hover:text-red-700"
                       title="Delete"
                     ><Trash2 className="w-5 h-5" /></button>

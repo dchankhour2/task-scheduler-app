@@ -1,6 +1,14 @@
 import { Search, Calendar } from "lucide-react";
+import React from 'react';
 
-const SearchTask: React.FC = ({ searchTerm, filterDate, setSearchTerm, setFilterDate}) => {
+interface SearchProps {
+    searchTerm: string;
+    filterDate: string;
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+    setFilterDate: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SearchTask: React.FC<SearchProps> = ({ searchTerm, filterDate, setSearchTerm, setFilterDate}) => {
 
     return (
         <div className="bg-white rounded-xl shadow p-4 mb-4 flex flex-col sm:flex-row gap-4">
@@ -28,3 +36,4 @@ const SearchTask: React.FC = ({ searchTerm, filterDate, setSearchTerm, setFilter
 }
 
 export default SearchTask;
+ 

@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import Modal from '../components/Elements/Modal';
 import { useTasks } from '../context/TasksContext';
 
-const AddTask: React.FC = ({ setOpenAddTask }) => {
+interface AddTaskProps {
+    setOpenAddTask: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-    const { addTask } = useTasks();
-    
-    const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        recurring: false,
-        dueDate: "",
-    });
+const AddTask: React.FC<AddTaskProps> = ({ setOpenAddTask }) => {
+        const { addTask } = useTasks();
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+        const [formData, setFormData] = useState({
+                title: "",
+                description: "",
+                recurring: false,
+                dueDate: "",
+        });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const target = e.target as HTMLInputElement;
+        const { name, value, type, checked } = target;
         setFormData((prev) => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value,
@@ -35,8 +40,8 @@ const AddTask: React.FC = ({ setOpenAddTask }) => {
         setOpenAddTask(false);
     };
     
-    return (
-       <div className="space-y-4">
+    const form = (
+         <div className="space-y-4">
             <div>
                 <label className="block text-gray-700 mb-1">Title</label>
                 <input
@@ -85,7 +90,12 @@ const AddTask: React.FC = ({ setOpenAddTask }) => {
                 className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                 Add Task
             </button>
-       </div>
+        </div>);
+
+    return (
+        <Modal 
+            title="Add Task"
+            onClose={() => setOpenAddTask(false)}>{form}</Modal>
     )
 }
 

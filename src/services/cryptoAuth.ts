@@ -22,7 +22,7 @@ function base64ToBuf(b64: string) {
   return buf;
 }
 
-async function deriveBits(password: string, salt: Uint8Array, iterations = 150_000, len = 256) {
+async function deriveBits(password: string, salt: ArrayBuffer | ArrayBufferView, iterations = 150_000, len = 256) {
   const keyMaterial = await crypto.subtle.importKey(
     'raw',
     encoder.encode(password),
