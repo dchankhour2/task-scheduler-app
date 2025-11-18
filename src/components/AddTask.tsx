@@ -3,7 +3,7 @@ import useTasks from '../hooks/useTasks';
 
 const AddTask: React.FC = ({ setOpenAddTask }) => {
 
-    const { addTask } = useTasks()
+    const { addTask } = useTasks();
     
     const [formData, setFormData] = useState({
         title: "",

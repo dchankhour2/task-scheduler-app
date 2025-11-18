@@ -4,6 +4,8 @@ A simple task scheduler web application for creating daily and recurring tasks, 
 
 Built with Vibe coding.
 
+Live demo: https://animated-muffin-ab96c1.netlify.app/
+
 Getting started
 1. npm install
 2. npm run dev

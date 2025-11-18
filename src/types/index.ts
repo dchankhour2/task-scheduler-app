@@ -9,6 +9,7 @@ export interface Task {
     description?: string;
     completed: boolean;
     recurring: boolean;
+    userId?: string;
     dueDate?: Date;
     recurrenceRule?: string;
 }
