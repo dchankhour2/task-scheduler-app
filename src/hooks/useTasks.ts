@@ -16,6 +16,7 @@ const useTasks = () => {
 
     // load tasks stored on the user record
     const userTasks = authService.getTasksForUser(cur.id);
+    console.log('loadTasksForCurrentUser', userTasks);
     setTasks(Array.isArray(userTasks) ? userTasks : []);
   };
 
@@ -38,6 +39,7 @@ const useTasks = () => {
     const cur = authService.getCurrentUser();
     if (!cur) return;
     authService.saveTasksForUser(cur.id, nextTasks);
+    console.log('saving new tasks', nextTasks);
     setTasks(nextTasks);
   };
 
@@ -46,6 +48,7 @@ const useTasks = () => {
     if (!cur) throw new Error('Not authenticated');
     const t = { ...task, id: task.id ?? String(Date.now()), userId: cur.id };
     const updated = [...tasks, t];
+    console.log('new tasks', updated);
     void saveTasks(updated);
   };
 

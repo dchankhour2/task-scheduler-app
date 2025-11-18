@@ -1,5 +1,5 @@
 import React from 'react';
-import useTasks from '../hooks/useTasks';
+import { useTasks } from '../context/TasksContext';
 
 const DeleteTask: React.FC = ({ taskToDelete, setOpenDeleteTask }) => {
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useTasks from '../hooks/useTasks';
+import { useTasks } from '../context/TasksContext';
 import TaskList from '../components/TaskList';
 import AddTask from '../components/AddTask';
 import DeleteTask from '../components/DeleteTask';
@@ -10,7 +10,9 @@ const Dashboard: React.FC = () => {
     const [openAddTask, setOpenAddTask] = useState(false);
     const [openDeleteTask, setOpenDeleteTask] = useState(false);
     const [currentTask, setCurrentTask] = useState(null);
-    const { tasks, updateTask, deleteTask, toggleTaskCompletion } = useTasks();
+    const { tasks, updateTask, toggleTaskCompletion, deleteTask } = useTasks();
+
+    console.log('list of tasks', tasks);
 
     //Search
     const [searchTerm, setSearchTerm] = useState("");
@@ -51,9 +53,8 @@ const Dashboard: React.FC = () => {
                  />
             <TaskList 
                 tasks={filteredTasks} 
-                onUpdate={updateTask} 
                 openDeleteTaskModal={openDeleteTaskModal} 
-                onToggleCompletion={toggleTaskCompletion} 
+                onDeleteTask={deleteTask}
             />
             {openAddTask && (
                 <Modal 

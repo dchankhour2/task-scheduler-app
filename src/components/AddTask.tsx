@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useTasks from '../hooks/useTasks';
+import { useTasks } from '../context/TasksContext';
 
 const AddTask: React.FC = ({ setOpenAddTask }) => {
 
@@ -24,8 +24,11 @@ const AddTask: React.FC = ({ setOpenAddTask }) => {
         if (!formData.title.trim()) return;
 
         const newTask = {
-            id: Date.now(),
-            ...formData,
+            id: String(Date.now()),
+            title: formData.title,
+            description: formData.description || undefined,
+            recurring: formData.recurring,
+            dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
         };
 
         addTask(newTask);
@@ -47,12 +50,12 @@ const AddTask: React.FC = ({ setOpenAddTask }) => {
             </div>
             <div>
                 <label className="block text-gray-700 mb-1">Description</label>
-                <textarea
+                                <textarea
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
                   placeholder="Task details..."
-                  rows="3"
+                                    rows={3}
                   className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
